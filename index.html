@@ -4,18 +4,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type="text/css" media="screen">
 body {
-	margin: 0;
+    margin: 0;
     background: black;
     color: white;
-    font-size: 20px;
+    font-size: 22px;
     text-align: center;
     font-family: 'Droid Sans';
 }
 #info {
-	padding: 20px;
+    padding: 20px;
+}
+#info a {
+    display: block;
+    color: white;
+    text-decoration: none;
 }
 #genre {
-	font-size: 42px;
+    font-size: 42px;
 }
 #controls{
     font-size: 16px;
@@ -43,20 +48,22 @@ button {
 
 <body>
 <div id="info">
-	<div id="genre"></div>
-	<div id="artist"></div>
-	<div id="song"></div>
+    <a id="genre" href="javascript:;" title="pause and youtube GENRE"></a>
+    <a id="artist" href="javascript:;" title="pause and youtube ARTIST"></a>
+    <a id="song" href="javascript:;" title="pause and youtube ARTIST and SONG"></a>
 </div>
 
 <button id="prev">⏪</button>
 <button id="playpause">play / pause</button>
 <button id="next">⏩</button>
-	
+    
 <div id="controls">
 1514 genres of music will play<br>
 spacebar to pause or play.<br>
 enter for full screen.<br>
-the arrow keys do things.</div>
+the arrow keys do things.<br>
+try clicking genre, artist, or song.
+</div>
 
 <script>
 player = document.createElement('video');
@@ -1580,8 +1587,8 @@ music = [
 ];
 
 function isAndroid() {
-	var ua = navigator.userAgent.toLowerCase();
-	return ua.indexOf("android") > -1;
+    var ua = navigator.userAgent.toLowerCase();
+    return ua.indexOf("android") > -1;
 }
 
 function shuffle(array) {
@@ -1603,54 +1610,76 @@ function shuffle(array) {
   return array;
 }
 
-function playNextSong() {
-	if (player && !player.paused) player.pause()
-	genre = ''
-	artist = ''
-	song = ''
-
-	if (currsong < music.length -2) {
-		currsong++
-		console.log('next song')
-	} else {
-		currsong = 0;
-		console.log('next to the beginnning')
-	}
-	blah = music[currsong]
-	info = blah.match('(.*) - (.*) - (.*)\.mp3')
-	if (info) {
-		genre = info[1]
-		artist = info[2]
-		song = info[3]
-		document.getElementById('genre').innerText = genre
-		document.getElementById('artist').innerText = artist
-		document.getElementById('song').innerText = song
-	}
-	//player = new Audio('songs/'+blah)
-	player.src = 'songs/'+blah;
-	player.onloadstart = function(){
-		if (isAndroid()) {
-			document.getElementById('playpause').innerText = '►'
-		} else {
-			document.getElementById('playpause').innerText = 'Loading...'
-		}
-	}
-	player.onloadeddata = function(){
-		document.getElementById('playpause').innerText = 'Loading...'
-	}
-	player.onplaying = function(){
-		document.getElementById('playpause').innerText = '◼'
-	}
-	player.onpause = function(){
-		document.getElementById('playpause').innerText = '►'
-	}
-	player.onended = function(){
-		playNextSong()
-	}
-	player.play()
-	console.log('current song = '+music[currsong])
+function youtube(query){
+    window.open('https://www.youtube.com/results?search_query='+escape(query))
 }
-	
+
+function youtubeGenre() {
+    if (player && !player.paused) player.pause()
+    window.open('https://www.youtube.com/results?search_query='+escape(genre))
+}
+
+function youtubeArtist() {
+    if (player && !player.paused) player.pause()
+    window.open('https://www.youtube.com/results?search_query='+escape(artist))
+}
+
+function youtubeSong() {
+    if (player && !player.paused) player.pause()
+    window.open('https://www.youtube.com/results?search_query='+escape(artist+' - '+song+' lyrics'))
+}
+
+function playNextSong() {
+    if (player && !player.paused) player.pause()
+    genre = ''
+    artist = ''
+    song = ''
+
+    if (currsong < music.length -2) {
+        currsong++
+        console.log('next song')
+    } else {
+        currsong = 0;
+        console.log('next to the beginnning')
+    }
+    blah = music[currsong]
+    info = blah.match('(.*) - (.*) - (.*)\.mp3')
+    if (info) {
+        genre = info[1]
+        artist = info[2]
+        song = info[3]
+        document.getElementById('genre').innerText = genre
+        document.getElementById('genre').href = 'javascript:youtubeGenre();'
+        document.getElementById('artist').innerText = artist
+        document.getElementById('artist').href = 'javascript:youtubeArtist();'
+        document.getElementById('song').innerText = song
+        document.getElementById('song').href = 'javascript:youtubeSong();'
+    }
+    //player = new Audio('songs/'+blah)
+    player.src = 'songs/'+blah;
+    player.onloadstart = function(){
+        if (isAndroid()) {
+            document.getElementById('playpause').innerText = '►'
+        } else {
+            document.getElementById('playpause').innerText = 'Loading...'
+        }
+    }
+    player.onloadeddata = function(){
+        document.getElementById('playpause').innerText = 'Loading...'
+    }
+    player.onplaying = function(){
+        document.getElementById('playpause').innerText = '◼'
+    }
+    player.onpause = function(){
+        document.getElementById('playpause').innerText = '►'
+    }
+    player.onended = function(){
+        playNextSong()
+    }
+    player.play()
+    console.log('current song = '+music[currsong])
+}
+    
 function volumeUp() {
     if (player.volume < 1)
     {
@@ -1667,14 +1696,14 @@ function volumeDown() {
 }
 
 function playPrevSong() {
-	if (currsong > 1) {
-		currsong = currsong - 2;
-		console.log('prev song')
-	} else {
-		currsong = music.length -3;
-		console.log('prev to the end')
-	}
-	playNextSong()
+    if (currsong > 1) {
+        currsong = currsong - 2;
+        console.log('prev song')
+    } else {
+        currsong = music.length -3;
+        console.log('prev to the end')
+    }
+    playNextSong()
 }
 
 function toggleFullScreen() {
@@ -1697,61 +1726,59 @@ function toggleFullScreen() {
     }  
   }  
 }
-	
+    
 function togglePlayer() {
-	if (player.paused) {
-		player.play()
-	} else {
-		player.pause()
-	}
+    if (player.paused) {
+        player.play()
+    } else {
+        player.pause()
+    }
 }
 
-function initKeyControls() {
-	document.body.onkeyup = function(ev) {
-		console.log(ev.keyCode)
-		switch (ev.keyCode) {
-			case 38: // up arrow
-				volumeUp()
-				break;
-			case 39: // right arrow
-				playNextSong()
-				break;
-			case 40: // down arrow
-				volumeDown()
-				break;
-			case 37: // left arrow
-				playPrevSong()
-				break;
-			case 32: // spacebar
-				togglePlayer();
-				break;
-			case 70: // F key
-			case 13: // enter
-				toggleFullScreen()
-				break;
-		}
-	}
+function initUI() {
+    document.body.onkeyup = function(ev) {
+        console.log(ev.keyCode)
+        switch (ev.keyCode) {
+            case 38: // up arrow
+                volumeUp()
+                break;
+            case 39: // right arrow
+                playNextSong()
+                break;
+            case 40: // down arrow
+                volumeDown()
+                break;
+            case 37: // left arrow
+                playPrevSong()
+                break;
+            case 32: // spacebar
+                togglePlayer();
+                break;
+            case 70: // F key
+            case 13: // enter
+                toggleFullScreen()
+                break;
+        }
+    }
+    document.getElementById('prev').onclick = function(){
+        playPrevSong();
+    }
+    document.getElementById('playpause').onclick = function(ev){
+        console.log(ev)
+        togglePlayer();
+    }
+    document.getElementById('next').onclick = function(){
+        playNextSong();
+    }
+
+    if (isAndroid()){
+        document.getElementById('controls').innerHTML = '1514 genres of music will play<br>try tapping genre, artist, or song.'
+    }
 }
 
 music = shuffle(music)
 playNextSong()
-initKeyControls()
-
-
-document.getElementById('prev').onclick = function(){
-	playPrevSong();
-}
-document.getElementById('playpause').onclick = function(ev){
-	console.log(ev)
-	togglePlayer();
-}
-document.getElementById('next').onclick = function(){
-	playNextSong();
-}
-
-if (isAndroid()){
-	document.getElementById('controls').innerHTML = '1514 genres of music will play'
-}
+initUI()
 </script>
 </body>
 </html>
