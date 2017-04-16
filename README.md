@@ -1,6 +1,4 @@
-# find your music
-
-## try it [here](https://richard512.github.io/findyourmusic/)
+# find your music. try it [here](https://richard512.github.io/findyourmusic/)
 
 [![find your music](https://raw.githubusercontent.com/richard512/findyourmusic/master/find-your-music.png)](https://richard512.github.io/findyourmusic/)
 
