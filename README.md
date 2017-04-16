@@ -1,6 +1,6 @@
 # find your music
 
-discover new music genres you like!
+a curated tour of some of the most loved songs of 1514 music genres
 
 ## try it [here](https://richard512.github.io/findyourmusic/)
 
