@@ -1,6 +1,6 @@
 # find your music
 
-a curated tour of some of the most loved songs of 1514 music genres
+[![find your music](https://raw.githubusercontent.com/richard512/findyourmusic/master/findyourmusic.png)](https://richard512.github.io/findyourmusic/)
 
 ## try it [here](https://richard512.github.io/findyourmusic/)
 
