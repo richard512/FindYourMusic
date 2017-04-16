@@ -1,4 +1,4 @@
-# findyourmusic
+# Find Your Music
 
 discover new music genres you like!
 
