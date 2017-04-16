@@ -1,6 +1,6 @@
 # find your music
 
-[![find your music](https://raw.githubusercontent.com/richard512/findyourmusic/master/findyourmusic.png)](https://richard512.github.io/findyourmusic/)
+[![find your music](https://raw.githubusercontent.com/richard512/findyourmusic/master/find-your-music.png)](https://richard512.github.io/findyourmusic/)
 
 ## try it [here](https://richard512.github.io/findyourmusic/)
 
