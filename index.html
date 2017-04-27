@@ -1659,7 +1659,7 @@ function playNextSong() {
         console.log('next to the beginnning')
     }
     blah = music[currsong]
-    info = blah.match('^(.*) - (.*) - (.*)\.mp3')
+    info = blah.match('^([^\-]*) - ([^\-]*) - ([^\-\.]*)')
     if (info) {
         genre = info[1]
         artist = info[2]
